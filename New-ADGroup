@@ -1,0 +1,24 @@
+<#
+
+Written by Dan Olson 2023
+
+#>
+
+# Import module
+Import-Module ActiveDirectory
+
+# Define Variables 
+$groupName = "Sample Group"
+$path = "CN=Users,DC=contoso,DC=com"
+
+# Check if group exists, and create if not
+$group = Get-ADGroup -Filter {Name -eq $groupName}
+
+if ($group -eq $null) {
+    Write-Host "Group does not exist. Creating group..."
+    New-ADGroup -Name $groupName -GroupCategory Security -Path $path -SamAccountName $groupName
+    Write-Host "Group created successfully!"
+} else {
+    Write-Host "Group already exists."
+}
+
