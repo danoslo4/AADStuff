@@ -1,13 +1,17 @@
 <# This is a quick script to get a list of user groups an AD user is a member of.
 Note: You will need to run this script from a machine with the ActiveDirectory module installed and have the appropriate permissions to run the Get-ADPrincipalGroupMembership cmdlet.
 
-Written by Dan Olson 2023 with the help from ChatGPT 
+Written by Dan Olson 2023
 #TODO: Combine these scripts into one to produce a CSV file with all group memberships, noting which ones are cloud and which ones are On Premises
+#TODO: Parameterize the user input
+
 #>
+# Import modules
+Import-Module ActiveDirectory
+Import-Module AzureAD
+
 
 ## Active Directory
-# Import the ActiveDirectory module
-Import-Module ActiveDirectory
 
 # Define the user you want to check the group membership for
 $User = "JohnDoe"
@@ -20,10 +24,6 @@ $Groups | Export-Csv -Path "C:\GroupMembership_$User.csv" -NoTypeInformation
 
 
 ## Azure Active Directory
-
-# Import the AzureActiveDirectory module
-Import-Module AzureAD
-
 # Define the user you want to check the group membership for
 $userPrincipalName = "<UserPrincipalName>"
 $user = Get-AzureADUser -Filter "userPrincipalName eq '$userPrincipalName'"
